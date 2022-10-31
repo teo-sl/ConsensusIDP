@@ -53,33 +53,6 @@ public class GraphUtility {
         }
         return ret;
     }
-
-
-
-    public static void main(String[] args) {
-        int n=4;
-        Graph g = new Graph(n);
-        g.setEdge(0, 1, 1);
-        g.setEdge(0, 2, 1);
-        g.setEdge(1, 3, 1);
-        g.setEdge(1, 2, 1);
-        g.setEdge(2, 3, 1);
-        g.setEdge(3, 1, 1);
-        g.setEdge(1, 0, 1);
-        g.setEdge(2, 0, 1);
-
-        System.out.println(g);
-
-        Graph gPlus = transitiveClouserOf(g);
-
-        System.out.println(gPlus);
-
-        System.out.println(getAncestors(g, 2));
-
-
-        System.out.println(initialClique(gPlus));
-
-    }
     
 }
 

@@ -1,4 +1,4 @@
-package algorithm;
+package protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,12 +16,19 @@ import graph.Graph;
 import graph.GraphUtility;
 
 public class Process extends Thread{
+    // the number of pocesses
     private static int nProc;
+
+    // the process waits for L-1 messages
     private static int L;
+
+    // this BlockingQueue simulates the message passing between processes
     private static ArrayList<BlockingQueue<Message>> firstMessageBuffers;
     private static ArrayList<BlockingQueue<Message>> secondMessageBuffers; 
 
     private int id;
+
+    // the graphs used by the protocol 
     private Graph g,gPlus;
 
     public Process(int id) {
@@ -33,6 +40,8 @@ public class Process extends Thread{
     private Random random = new Random();
 
     public void run() {
+
+        // simulate a sleep and the possibility of a failure
         randomSleep();
         if(randomError()) {
             System.out.println(id+" : error...shutting down...");
@@ -52,6 +61,7 @@ public class Process extends Thread{
                     e.printStackTrace();
                 }
 
+        // read the first L-1 messages
         List<Message> messages = new LinkedList<>();
         for(int i=0;i<L-1;++i)
             try {
@@ -60,17 +70,20 @@ public class Process extends Thread{
                 e.printStackTrace();
             }
 
+        // the ids of the ancestors
         Set<Integer> ancenstors = messages.stream()
                                 .map(x->x.getSenderId())
                                 .collect(Collectors.toSet());
 
 
-        
+        // choose initial value
         int initialValue = (random.nextDouble()>=0.5) ? 1 : 0;
         System.out.println(id+" : initial value : "+initialValue);
+
+        // send its id, ancestors and initial value to the other processes
         Message secondMessage = new SecondMessage(id, ancenstors,initialValue);
         for(int i=0;i<nProc;++i) {
-            //if(i!=this.id)
+            //if(i!=this.id) doesn't work
                 try {
                     secondMessageBuffers.get(i).put(secondMessage);
                 } catch (InterruptedException e) {
@@ -120,7 +133,6 @@ public class Process extends Thread{
                 unorderedMessages.add(sm);
 
             toWait.removeAll(map.keySet());
-            //toWait.remove(id);
         }
 
         int activeProc;
@@ -146,7 +158,6 @@ public class Process extends Thread{
             for(Integer j : map.get(k))
                 this.g.setEdge(j,k,1);
         
-        //System.out.println(id+"\n"+g);
         gPlus = GraphUtility.transitiveClouserOf(g);
 
         Set<Integer> initialClique = GraphUtility.initialClique(gPlus);
