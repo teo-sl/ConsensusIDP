@@ -31,6 +31,8 @@ public class Process extends Thread{
     // the graphs used by the protocol 
     private Graph g,gPlus;
 
+    private int initialValue,finalDecision;
+
     public Process(int id) {
         this.id = id;
     }
@@ -77,7 +79,7 @@ public class Process extends Thread{
 
 
         // choose initial value
-        int initialValue = (random.nextDouble()>=0.5) ? 1 : 0;
+        initialValue = (random.nextDouble()>=0.5) ? 1 : 0;
         System.out.println(id+" : initial value : "+initialValue);
 
         // send its id, ancestors and initial value to the other processes
@@ -167,7 +169,7 @@ public class Process extends Thread{
                             .map(x->values.get(x))
                             .reduce(0,(x,y)->x+y) / (double) activeProc;
         
-        int finalDecision = (result>=0.5) ? 1 : 0;
+        finalDecision = (result>=0.5) ? 1 : 0;
 
         System.out.println(id+" : My final decision is : "+finalDecision);
 
@@ -180,7 +182,7 @@ public class Process extends Thread{
     }
     private void randomSleep() {
         try {
-            Thread.sleep(random.nextInt(2000));
+            Thread.sleep(random.nextInt(5000));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -197,6 +199,14 @@ public class Process extends Thread{
 
         }
 
+    }
+
+    public int getInitialValue() {
+        return initialValue;
+    }
+    
+    public int getFinalDecision() {
+        return this.finalDecision;
     }
     
 }
