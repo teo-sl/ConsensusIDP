@@ -1,4 +1,4 @@
-package graph;
+package baseIDP.graph;
 
 import java.util.HashSet;
 import java.util.LinkedList;

@@ -1,4 +1,4 @@
-package protocol;
+package baseIDP.protocol;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +12,8 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
-import graph.Graph;
-import graph.GraphUtility;
+import baseIDP.graph.Graph;
+import baseIDP.graph.GraphUtility;
 
 public class Process extends Thread{
     // the number of pocesses

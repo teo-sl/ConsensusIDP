@@ -1,4 +1,5 @@
-import protocol.Process;
+package baseIDP;
+import baseIDP.protocol.Process;
 public class Test {
     public static void main(String[] args) throws InterruptedException {
         int nProc = 5;
