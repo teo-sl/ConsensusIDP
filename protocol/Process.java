@@ -181,8 +181,12 @@ public class Process extends Thread{
             
     }
     private void randomSleep() {
+        int sleepTime = 5000;
+        if(id==4)
+            sleepTime=20000;
         try {
-            Thread.sleep(random.nextInt(5000));
+            
+            Thread.sleep(random.nextInt(sleepTime));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
